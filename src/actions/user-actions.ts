@@ -51,3 +51,17 @@ export async function getUserByClerkId(clerkId: string) {
     }
   })
 }
+
+export async function getDbUserId() {
+
+  //first we need to get the clerkId for the current logged in user
+  const { userId: clerkId } = await auth()
+  if (!clerkId) throw new Error("user not authorised")
+
+  //if we have the clerkid, we then need to get the user from the db 
+  const user = await getUserByClerkId(clerkId)
+  if (!user) throw new Error('User not found')
+
+  //if all goes well, we shoulf be abnle to return the user id
+  return user.id
+}

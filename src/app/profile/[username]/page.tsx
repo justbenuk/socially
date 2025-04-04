@@ -5,5 +5,6 @@ export default function ProfilePage({
 }: {
   params: { username: string };
 }) {
+  console.log(params);
   return <div>Profile Page</div>;
 }

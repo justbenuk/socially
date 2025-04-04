@@ -3,7 +3,6 @@
 import { db } from "@/lib/db"
 import { getDbUserId } from "./user-actions"
 import { revalidatePath } from "next/cache"
-import { Comment } from '@prisma/client'
 
 export async function createPost(content: string, imageUrl: string) {
   try {
@@ -150,8 +149,6 @@ export async function createComment(postId: string, content: string) {
       where: { id: postId },
       select: { authorId: true }
     })
-
-    console.log(post)
 
     if(!post) return
 

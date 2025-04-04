@@ -31,6 +31,7 @@ export default function CreatePost() {
         toast.success("Post created");
       }
     } catch (error) {
+      console.log("failed to post", error);
       toast.error("Failed to post");
     } finally {
       setIsPosting(false);

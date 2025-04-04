@@ -47,6 +47,7 @@ export default function PostCard({
       setOptimisticLikes((prev) => prev + (hasLiked ? -1 : 1));
       await toggleLike(post.id);
     } catch (error) {
+      console.log(error);
       setOptimisticLikes(post._count.likes);
       setHasLiked(post.likes.some((like) => like.userId === dbUserId));
     } finally {
@@ -65,6 +66,7 @@ export default function PostCard({
         setNewComment("");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to add comment");
     } finally {
       setIsCommenting(false);
@@ -80,6 +82,7 @@ export default function PostCard({
       if (result.success) toast.success("Post Deleted");
       else throw new Error(result.error);
     } catch (error) {
+      console.log(error);
       toast.error("Failed to delete post");
     } finally {
       setIsDeleting(false);

@@ -36,7 +36,7 @@ export async function syncUser() {
 }
 
 export async function getUserByClerkId(clerkId: string) {
-  return db.user.findUnique({
+   return db.user.findUnique({
     where: {
       clerkId
     },
@@ -56,7 +56,7 @@ export async function getDbUserId() {
 
   //first we need to get the clerkId for the current logged in user
   const { userId: clerkId } = await auth()
-  if (!clerkId) throw new Error("user not authorised")
+  if (!clerkId) return null
 
   //if we have the clerkid, we then need to get the user from the db 
   const user = await getUserByClerkId(clerkId)
@@ -64,4 +64,41 @@ export async function getDbUserId() {
 
   //if all goes well, we shoulf be abnle to return the user id
   return user.id
+}
+
+export async function getRandomUsers() {
+  try {
+    //get the user id 
+    const userId = await getDbUserId()
+
+    if (!userId) return []
+
+    //get 3 random users exclude ourselfs and users we already follow
+    const randomUsers = await db.user.findMany({
+      where: {
+        AND: [
+          { NOT: { id: userId } },
+          { NOT: { followers: { some: { followerId: userId } } } }
+        ]
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        image: true,
+        _count: {
+          select: {
+            followers: true
+          }
+        }
+      },
+      take: 3
+    })
+
+    return randomUsers
+
+  } catch (error) {
+    console.log("Error fetching users", error)
+    return []
+  }
 }

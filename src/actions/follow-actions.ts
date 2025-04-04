@@ -47,7 +47,7 @@ export async function toggleFollow(targetUserId: string) {
     revalidatePath('/')
     return { success: true }
   } catch (error) {
-    console.log(error)
-    return { success: false, error: 'Something Went Wrong' }
+    console.log('unable to follow user', error)
+   return {success: false, error: 'Unable to follow user'}
   }
 }

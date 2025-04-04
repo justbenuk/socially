@@ -132,6 +132,7 @@ export async function toggleLike(postId: string) {
     revalidatePath('/')
     return { success: true }
   } catch (error) {
+    console.log('unable to follow user', error)
     return { success: false, error: error }
   }
 }
@@ -180,6 +181,7 @@ export async function createComment(postId: string, content: string) {
     revalidatePath(`/posts/${postId}`)
     return { success: true, comment }
   } catch (error) {
+    console.log('unable to create comment', error)
     return {success: false, error: 'Something went wrong'}
   }
 }
@@ -208,6 +210,7 @@ export async function deletePost(postId: string) {
     return {success: true}
   
   } catch (error) {
+    console.log("unable to delete post", error)
     return { success: false, error: 'Failed to delete post'}
   }
 }

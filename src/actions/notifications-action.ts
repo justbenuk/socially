@@ -41,6 +41,7 @@ export async function getNotifications() {
     })
     return notifications
   } catch (error) {
+    console.log('unable to get notifications', error)
     throw new Error("Failed to fetch notifications")
   }
 }
@@ -57,8 +58,9 @@ export async function markNotificationsAsRead(notificationId: string[]) {
         read: true
       }
     })
-    return {aeccess: true }
+    return {success: true }
   } catch (error) {
+    console.log('unable to mark as read', error)
     throw new Error('Something went wrong')
   }
 }
